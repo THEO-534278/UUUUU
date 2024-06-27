@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="(e) => {
+        e.preventDefault();
+        sendMessage(document.getElementById('message').value)
+    }">
+        <input type="text" name="message" id="message">
+    </form>
+    <script>
+        const websocket = new WebSocket("ws://" + location.hostname + ":8001");
+
+        function sendMessage(text)
+        {
+            const payload = {
+                type: "send",
+                message: text
+            };
+            websocket.send(JSON.stringify(payload));
+        }
+    </script>
+</body>
+</html>
